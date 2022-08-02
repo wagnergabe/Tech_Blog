@@ -3,6 +3,9 @@ const Post = require('./Post');
 const Comment = require('./Comment');
 
 // sequelize associations go here
+
+//----USER----//
+
 User.hasMany(Post, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
@@ -12,6 +15,9 @@ User.hasMany(Comment, {
   foreignKey: 'user_id',
   onDelete: "CASCADE"
 })
+
+///----Post---///
+
 //post has a relation to user
 Post.belongTo(User, {
   foreignKey: 'user_id',
@@ -19,12 +25,20 @@ Post.belongTo(User, {
 })
 //post has a relation to comment
 Post.hasMany(Comment, {
-  foreignKey: 'posts_id',
+  foreignKey: 'post_id',
   onDelete: "CASCADE"
 })
+
+//-----Comment-----//
+
 //comment has a relation to user
 Comment.belongsTo(User, {
   foreignKey: 'user_id',
+  onDelete: "CASCADE"
+})
+
+Comment.belongsTo(Post, {
+  foreignKey: "post_id",
   onDelete: "CASCADE"
 })
 

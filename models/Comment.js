@@ -19,9 +19,20 @@ Comment.init(
       references: {
         model: 'login',
         key: 'id'
-      }
-
-    }
+      },
+    },
+    comment: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    comment_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "comment_post",
+        key: "id"
+      },
+    },
   },
   {
     sequelize,
