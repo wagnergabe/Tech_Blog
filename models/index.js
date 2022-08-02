@@ -5,8 +5,20 @@ const Comment = require('./Comment');
 // sequelize associations go here
 
 //post has a relation to user
+Post.belongTo(User, {
+  foreignKey: 'user_id',
+  onDelete: "CASCADE"
+})
 //post has a relation to comment
+Post.hasMany(Comment, {
+  foreignKey: 'posts_id',
+  onDelete: "CASCADE"
+})
 //comment has a relation to user
+Comment.belongsTo(User, {
+  foreignKey: 'user_id',
+  onDelete: "CASCADE"
+})
 
 // the correct relation code is up to you
 
