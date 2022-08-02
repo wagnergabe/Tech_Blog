@@ -13,13 +13,22 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    body: {
-      type: DataTypes.STRING,
-      allowNull: false
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'login',
+        key: 'id'
+      }
+
     }
   },
   {
-    sequelize
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'User'
   }
 );
 
