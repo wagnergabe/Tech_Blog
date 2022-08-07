@@ -4,38 +4,37 @@ const sequelize = require('../config/config');
 // class simply allow methods and data to be packaged together and used elsewhere in our code
 // setting up models as classes gives developers much scalability for our table to have added methods, which act on the model data, when our app functionality grows
 class Post extends Model {}
-
 Post.init(
   {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
-    },
-    user_id: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      references: {
-        model: "user",
-        key: "id",
-      }
+      autoIncrement: true
     },
     title: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    body: DataTypes.STRING,
-    allowNull: false
+    post_text: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
+    }
+  },
   {
     sequelize,
-    timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'Post'
-
+    modelName: 'post'
   }
-);
+)
+
 
 module.exports = Post;

@@ -9,9 +9,18 @@ const withAuth = require("../utils/auth");
 router.get("/", withAuth, (req, res) => {
 	Post.findAll({
 		//code here
+		include: {
+			model: Post,
+			attributes: ['id', 'user_id'],
+		},
+
 	})
 		.then((data) => {
 			// code here
+		})
+		res.render('all-posts', {
+			posts,
+			loggedIn: req.session.loggIn
 		})
 		.catch((err) => {
 			console.log(err);

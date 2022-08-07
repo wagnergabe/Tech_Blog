@@ -8,6 +8,9 @@ const { Post, Comment, User } = require("../models/");
 router.get("/", (req, res) => {
 	Post.findAll({
 		//code here
+		where: {
+			user_id: req.session
+		}
 	})
 		.then((data) => {
 			// code here
@@ -22,9 +25,34 @@ router.get("/", (req, res) => {
 router.get("/post/:id", (req, res) => {
 	Post.findByPk(req.params.id, {
 		//code here
+		attributes: [
+			'id',
+			'title',
+			"post_text",
+			'created_at'      
+		  ],
+		  include: [
+			{
+			  model: Comment,
+			  attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+			  include: {
+				model: User,
+				attributes: ['username']
+			  }
+			},
+			{
+			  model: User,
+			  attributes: ['username']
+			}
+		]
 	})
 		.then((data) => {
 			// code here
+			const posts = data.map(post => post.get({ plain: true }));
+			res.render('homepage', { 
+			  posts,
+			  loggedIn: req.session.loggedIn 
+			});
 		})
 		.catch((err) => {
 			res.status(500).json(err);
