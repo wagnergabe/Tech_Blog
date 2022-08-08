@@ -13,7 +13,6 @@ router.get("/", withAuth, (req, res) => {
 			user_id: req.session.user_id
 		  },
 		  attributes: ['id', 'title', 'post_text', 'created_at'],
-		  order: [['created_at', 'DESC']],
 		  include: [
 			{
 			  model: User,
@@ -31,12 +30,16 @@ router.get("/", withAuth, (req, res) => {
 		})
 		.then((data) => {
 			const posts = data.map(post => post.get({ plain: true }));
-			res.render('dashboard', { posts, loggedIn: true });
-		})
+			res.render("dashboard", {
+				layout: "dashboard",
+				posts,
+			  })
+		
 		.catch((err) => {
 			console.log(err);
+		})
+	})
 		});
-});
 // http://localhost:3000/dashboard/new
 // user must be logged in to see this route
 router.get("/new", withAuth, (req, res) => {
@@ -54,6 +57,9 @@ router.get("/edit/:id", withAuth, (req, res) => {
 		.catch((err) => {
 			res.status(500).json(err);
 		});
+})
+router.get('/new', (req, res) => {
+    res.render('new-post');
 });
 
 module.exports = router;
