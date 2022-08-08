@@ -9,23 +9,32 @@ const withAuth = require("../utils/auth");
 router.get("/", withAuth, (req, res) => {
 	Post.findAll({
 		//code here
-		include: {
-			model: Post,
-			attributes: ['id', 'user_id'],
-		},
-
-	})
-		.then((data) => {
-			// code here
+	    where: {
+			user_id: req.session.user_id
+		  },
+		  attributes: ['id', 'title', 'post_text', 'created_at'],
+		  order: [['created_at', 'DESC']],
+		  include: [
+			{
+			  model: User,
+			  attributes: ['username']
+			},
+			{
+			  model: Comment,
+			  attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+			  include: {
+				model: User,
+				attributes: ['username']
+			  }
+			}
+		  ]
 		})
-		res.render('all-posts', {
-			posts,
-			loggedIn: req.session.loggIn
+		.then((data) => {
+			const posts = data.map(post => post.get({ plain: true }));
+			res.render('dashboard', { posts, loggedIn: true });
 		})
 		.catch((err) => {
 			console.log(err);
-			// if there is an error redirect to the login handlebar
-			res.redirect("login");
 		});
 });
 // http://localhost:3000/dashboard/new

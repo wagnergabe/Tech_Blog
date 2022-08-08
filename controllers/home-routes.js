@@ -32,7 +32,7 @@ router.get("/", (req, res) => {
 		.then((data) => {
 			// code here
 			const posts = data.map(post => post.get({ plain: true }));
-			res.render('homepage', { 
+			res.render('all-posts-admin', { 
 			  posts,
 			  loggedIn: req.session.loggedIn 
 			});
