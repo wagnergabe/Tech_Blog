@@ -1,8 +1,10 @@
 <div class="posts list-group">
+  {{#if loggedIn}}
   {{#each posts}}
     <a class="list-item flex-row justify-space-between" href="/dashboard/edit/{!-- handlebar code here --}}">
-      <span>{{!-- handlebar code here --}}</span>
+      <span>{{!-- handlebar code here --}} {{>post-info post}}</span>
       <span>{{!-- handlebar code here --}}</span>
     </a>
   {{/each}}
+  {{/if}}
 </div>

@@ -1,0 +1,14 @@
+<article class="container">
+  <div class="card w-80 p-2">
+    <div class="card-body">
+      <h4 class="card-title">{{title}}</h4>
+      <h5 class="card-subtitle mb-2">Posted by:
+        {{user.username}}
+        on
+        {{format_date created_at}}</h5>
+      <p class="card-text">{{post_text}}</p>
+      <a href="/post/{{id}}">{{comments.length}}
+        {{format_plural "comment" comments.length}}</a>
+    </div>
+  </div>
+</article>

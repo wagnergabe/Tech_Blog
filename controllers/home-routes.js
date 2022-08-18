@@ -47,6 +47,7 @@ router.get("/", (req, res) => {
 router.get("/post/:id", (req, res) => {
 	Post.findByPk(req.params.id, {
 		//code here
+
 		attributes: [
 			'id',
 			'title',
@@ -85,6 +86,11 @@ router.get("/post/:id", (req, res) => {
 // login user route
 router.get("/login", (req, res) => {
 	// code here
+	if (req.session.loggedIn) {
+		res.redirect('/');
+		return;
+	}
+	res.render('login')
 });
 
 // http://localhost:3001/signup
