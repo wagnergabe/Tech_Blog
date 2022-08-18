@@ -97,6 +97,7 @@ router.get("/login", (req, res) => {
 // signup user route
 router.get("/signup", (req, res) => {
 	// code here
+res.render('signup')
 });
 
 module.exports = router;

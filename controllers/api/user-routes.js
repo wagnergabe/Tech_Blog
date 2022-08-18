@@ -6,9 +6,15 @@ const { User } = require("../../models");
 router.post("/", (req, res) => {
 	User.create({
 		//code here
+		username: req.body.username,
+		password: req.body.password 
 	})
 		.then((data) => {
 			// code here
+			req.session.user_id = data.id;
+			req.session.username = data.username;
+			req.session.loggedIn = true;
+
 			res.json(data);
 		})
 		.catch((err) => {
@@ -23,6 +29,7 @@ router.post("/login", (req, res) => {
 	User.findOne({
 		where: {
 			// code here
+			username: req.body.username
 		},
 	}).then((data) => {
 		if (!data) {
@@ -39,6 +46,9 @@ router.post("/login", (req, res) => {
 
 		req.session.save(() => {
 			//code here
+			req.session.user_id= data.id;
+			req.session.username = data.username;
+			req.session.loggedIn = true;
 			// great to have this message
 			res.json({ user: data, message: "You are now logged in!" });
 		});
@@ -65,6 +75,7 @@ router.delete("/user/:id", (req, res) => {
 	User.destroy({
 		where: {
 			//code here
+			id: req.params.id
 		},
 	})
 		.then((data) => {
